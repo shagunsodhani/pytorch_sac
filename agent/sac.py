@@ -1,18 +1,18 @@
+import math
+
+import hydra
 import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import math
-
-from agent import Agent
 import utils
 
-import hydra
+from agent import Agent
 
 
 class SACAgent(Agent):
     """SAC algorithm."""
-    def __init__(self, obs_dim, action_dim, action_range, device, critic_cfg,
+    def __init__(self, name, obs_dim, action_dim, action_range, device, critic_cfg,
                  actor_cfg, discount, init_temperature, alpha_lr, alpha_betas,
                  actor_lr, actor_betas, actor_update_frequency, critic_lr,
                  critic_betas, critic_tau, critic_target_update_frequency,

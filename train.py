@@ -1,22 +1,22 @@
 #!/usr/bin/env python3
+import copy
+import math
+import os
+import pickle as pkl
+import sys
+import time
+
+import dmc2gym
+import hydra
 import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import copy
-import math
-import os
-import sys
-import time
-import pickle as pkl
 
-from video import VideoRecorder
+import utils
 from logger import Logger
 from replay_buffer import ReplayBuffer
-import utils
-
-import dmc2gym
-import hydra
+from video import VideoRecorder
 
 
 def make_env(cfg):
@@ -55,9 +55,9 @@ class Workspace(object):
         self.device = torch.device(cfg.device)
         self.env = utils.make_env(cfg)
 
-        cfg.agent.params.obs_dim = self.env.observation_space.shape[0]
-        cfg.agent.params.action_dim = self.env.action_space.shape[0]
-        cfg.agent.params.action_range = [
+        cfg.agent.obs_dim = self.env.observation_space.shape[0]
+        cfg.agent.action_dim = self.env.action_space.shape[0]
+        cfg.agent.action_range = [
             float(self.env.action_space.low.min()),
             float(self.env.action_space.high.max())
         ]
@@ -148,8 +148,7 @@ class Workspace(object):
             episode_step += 1
             self.step += 1
 
-
-@hydra.main(config_path='config/train.yaml', strict=True)
+@hydra.main(config_path="config", config_name="train")
 def main(cfg):
     workspace = Workspace(cfg)
     workspace.run()

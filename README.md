@@ -21,6 +21,8 @@ conda env create -f conda_env.yml
 source activate pytorch_sac
 ```
 
+Note: Prefer using latest version of PyTorch ` conda install pytorch==1.9.1 torchvision==0.10.0 cudatoolkit=11.1 -c pytorch -c nvidia`
+
 ## Instructions
 To train an SAC agent on the `cheetah run` task run:
 ```
